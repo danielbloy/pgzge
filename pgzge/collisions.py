@@ -1,3 +1,6 @@
+from core import GameObject
+
+
 class SpriteCollisions(GameObject):
 
     def __init__(self):
@@ -5,9 +8,6 @@ class SpriteCollisions(GameObject):
         self.detections = []
 
     def update(self, dt):
-        if game_hud.show_stage:
-            return
-
         for sprites1, sprites2, callback in self.detections:
 
             for sprite1 in sprites1():
