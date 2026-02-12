@@ -1,13 +1,12 @@
-from typing import Any
+from pgzero.keyboard import Keyboard
 
 from sprites import Behaviour
 
-keyboard: Any
+keyboard: Keyboard
 
 
 class MovePlayer(Behaviour):
     def execute(self, dt, sprite):
-        global keyboard
 
         new_pos = sprite.pos
         if keyboard.a or keyboard.left:

@@ -1,5 +1,8 @@
 import time
 
+# TODO: remove dependency on pgzero.actor
+from pgzero.actor import Actor
+
 from core import GameObject
 
 
