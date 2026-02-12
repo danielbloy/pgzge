@@ -1,4 +1,8 @@
+from typing import Any
+
 from sprites import Behaviour
+
+keyboard: Any
 
 
 class MovePlayer(Behaviour):

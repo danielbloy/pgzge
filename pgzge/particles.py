@@ -1,3 +1,7 @@
+from random import randint
+
+from core import GameObject
+
 GRAVITY = 60
 
 PARTICLE_EXPLOSION_MIN_VX = -90
