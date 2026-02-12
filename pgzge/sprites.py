@@ -1,4 +1,3 @@
-# TODO: Should behaviours be in game objects or unique to sprites?
 class Behaviour:
     def enabled(self, sprite):
         return True
