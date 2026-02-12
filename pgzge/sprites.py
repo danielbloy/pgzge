@@ -1,3 +1,8 @@
+import time
+
+from core import GameObject
+
+
 class Behaviour:
     def enabled(self, sprite):
         return True
@@ -13,6 +18,7 @@ class Behaviour:
 
 
 class Sprite(GameObject):
+    # TODO: Add hitbox for collision detection
     def __init__(self, position, images, *behaviours):
         super().__init__()
         self.lifetime = None
