@@ -1,3 +1,6 @@
+from sprites import Behaviour
+
+
 class Sequence(Behaviour):
     def __init__(self, *behaviours):
         self.behaviours = behaviours

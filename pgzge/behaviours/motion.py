@@ -1,3 +1,6 @@
+from sprites import Behaviour
+
+
 class MovePlayer(Behaviour):
     def execute(self, dt, sprite):
         new_pos = sprite.pos
