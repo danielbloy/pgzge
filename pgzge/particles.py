@@ -42,6 +42,9 @@ PARTICLE_SCORE_MAX_VX = 60
 PARTICLE_SCORE_MIN_VY = -30
 PARTICLE_SCORE_MAX_VY = 60
 
+# TODO: move to a config file
+YELLOW = (255, 255, 0)
+
 
 class ParticleScore(GameObject):
 

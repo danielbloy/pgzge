@@ -7,6 +7,8 @@ keyboard: Any
 
 class MovePlayer(Behaviour):
     def execute(self, dt, sprite):
+        global keyboard
+
         new_pos = sprite.pos
         if keyboard.a or keyboard.left:
             new_pos = (new_pos[0] - (sprite.vx * dt), new_pos[1])
