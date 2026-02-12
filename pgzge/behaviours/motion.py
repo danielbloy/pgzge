@@ -1,25 +1,4 @@
-from pgzero.keyboard import Keyboard
-
 from sprites import Behaviour
-
-keyboard: Keyboard
-
-
-class MovePlayer(Behaviour):
-    def execute(self, dt, sprite):
-
-        new_pos = sprite.pos
-        if keyboard.a or keyboard.left:
-            new_pos = (new_pos[0] - (sprite.vx * dt), new_pos[1])
-        elif keyboard.d or keyboard.right:
-            new_pos = (new_pos[0] + (sprite.vx * dt), new_pos[1])
-
-        if new_pos[0] < sprite.max_left:
-            new_pos = (sprite.max_left, new_pos[1])
-        elif new_pos[0] > sprite.max_right:
-            new_pos = (sprite.max_right, new_pos[1])
-
-        sprite.pos = new_pos
 
 
 class Move(Behaviour):
