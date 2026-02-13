@@ -30,7 +30,11 @@ class GameObject:
 
         # TODO: explain handler vs handlers
 
-        # TODO: Note update, draw, activate and deactivate propoagates down the hierarchy
+        # TODO: Note update, draw, activate, deactivate and destroy propagates down the hierarchy
+        # TODO: Note that destroy property propagates down the hierarchy but does not remove the object from it's parent until the next update.
+
+        # TODO: Note that destroy is done in reverse order, children first.
+
         # TODO: Add a paused property that is like active but does not trigger the activate and deactivate events when changed.
         # TODO: Add a parent property.
 
@@ -77,7 +81,7 @@ class GameObject:
         self.__activate_handlers.append(activate_handler) if activate_handler else None
         self.__deactivate_handlers.append(deactivate_handler) if deactivate_handler else None
         self.__destroyed_handlers.append(destroyed_handler) if destroyed_handler else None
-        self.destroy: bool = False
+        self.__destroy: bool = False
         # This forces the active or deactivate events to be called.
         self.__active: bool = not active
         self.active = active
@@ -91,7 +95,7 @@ class GameObject:
         return self.__active
 
     @active.setter
-    def active(self, value):
+    def active(self, value: bool):
         if self.__active == value:
             return
 
@@ -109,6 +113,25 @@ class GameObject:
         # Propagate the active state to all children.
         for child in self.__children:
             child.active = value
+
+    @property
+    def destroy(self) -> bool:
+        return self.__destroy
+
+    @destroy.setter
+    def destroy(self, value: bool):
+        # Propagate the destroy state to all children.
+        for child in self.__children:
+            child.destroy = value
+
+        if self.__destroy == value:
+            return
+
+        self.__destroy = value
+
+        self.destroyed()
+        for handler in self.__destroyed_handlers:
+            handler(self)
 
     @property
     def children(self) -> list[Self]:
@@ -179,21 +202,10 @@ class GameObject:
             child.do_update(dt)
 
         # Remove any destroyed children
-        children_to_destroy = [
-            child for child in self.__children
-            if child.destroy
-        ]
-
         self.__children = [
             child for child in self.__children
             if not child.destroy
         ]
-
-        # TODO: Fix destroy handler handling
-        for destroyed_child in children_to_destroy:
-            destroyed_child.destroyed()
-            for handler in destroyed_child.__destroyed_handlers:
-                destroyed_child.destroyed_handler(destroyed_child)
 
     def draw(self, surface: Any):
         pass
@@ -210,6 +222,9 @@ class GameObject:
     def destroyed(self):
         pass
 
+
+# TODO: implement a better way to manage the root GameObject and the draw and update functions.
+#  Maybe have a Game class that manages these things and the main loop?
 
 __root = GameObject()
 
