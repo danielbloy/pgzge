@@ -28,6 +28,12 @@ class GameObject:
         * destroyed_handler = If specified, this function will be called immediately after destroyed()
                               is called.
 
+        # TODO: explain handler vs handlers
+
+        # TODO: Note update, draw, activate and deactivate propoagates down the hierarchy
+        # TODO: Add a paused property that is like active but does not trigger the activate and deactivate events when changed.
+        # TODO: Add a parent property.
+
         The handlers can be used to provide instance specific behaviour without having to make a subclass
         and override the relevant method.
     """
@@ -41,7 +47,12 @@ class GameObject:
                  update_handler: Callable[[Self, float], None] = None,
                  activate_handler: Callable[[Self], None] = None,
                  deactivate_handler: Callable[[Self], None] = None,
-                 destroyed_handler: Callable[[Self], None] = None):
+                 destroyed_handler: Callable[[Self], None] = None,
+                 draw_handlers: list[Callable[[Self, Any], None]] = None,
+                 update_handlers: list[Callable[[Self, float], None]] = None,
+                 activate_handlers: list[Callable[[Self], None]] = None,
+                 deactivate_handlers: list[Callable[[Self], None]] = None,
+                 destroyed_handlers: list[Callable[[Self], None]] = None):
         """
         Initialises a GameObjects properties with the provided arguments. All arguments are optional and
         have a corresponding property. The only point of note is that the active property is set twice to
@@ -51,11 +62,17 @@ class GameObject:
         self.__name: str | None = name
         self.visible: bool = visible
         self.__children: list[Self] = children.copy() if children else []
-        self.draw_handler: Callable[[Self, Any], None] = draw_handler
-        self.update_handler: Callable[[Self, float], None] = update_handler
-        self.activate_handler: Callable[[Self], None] = activate_handler
-        self.deactivate_handler: Callable[[Self], None] = deactivate_handler
-        self.destroyed_handler: Callable[[Self], None] = destroyed_handler
+        self.draw_handlers: list[Callable[[Self, Any], None]] = draw_handlers.copy() if draw_handlers else []
+        self.update_handlers: list[Callable[[Self, float], None]] = update_handlers.copy() if update_handlers else []
+        self.activate_handlers: list[Callable[[Self], None]] = activate_handlers.copy() if activate_handlers else []
+        self.deactivate_handlers: list[
+            Callable[[Self], None]] = deactivate_handlers.copy() if deactivate_handlers else []
+        self.destroyed_handlers: list[Callable[[Self], None]] = destroyed_handler.copy() if destroyed_handlers else []
+        self.draw_handlers.append(draw_handler) if draw_handler else None
+        self.update_handlers.append(update_handler) if update_handler else None
+        self.activate_handlers.append(activate_handler) if activate_handler else None
+        self.deactivate_handlers.append(deactivate_handler) if deactivate_handler else None
+        self.destroyed_handlers.append(destroyed_handler) if destroyed_handler else None
         self.destroy: bool = False
         # This forces the active or deactivate events to be called.
         self.__active: bool = not active
@@ -78,12 +95,16 @@ class GameObject:
 
         if value:
             self.activated()
-            if self.activate_handler:
-                self.activate_handler(self)
+            for handler in self.activate_handlers:
+                handler(self)
         else:
             self.deactivated()
-            if self.deactivate_handler:
-                self.deactivate_handler(self)
+            for handler in self.deactivate_handlers:
+                handler(self)
+
+        # Propagate the active state to all children.
+        for child in self.__children:
+            child.active = value
 
     @property
     def children(self) -> list[Self]:
@@ -95,10 +116,40 @@ class GameObject:
     def remove_child(self, child: Self):
         self.__children.remove(child)
 
+    def add_draw_handler(self, handler: Callable[[Self, Any], None]):
+        self.draw_handlers.append(handler) if handler else None
+
+    def remove_draw_handler(self, handler: Callable[[Self, Any], None]):
+        self.draw_handlers.remove(handler) if handler else None
+
+    def add_update_handler(self, handler: Callable[[Self, float], None]):
+        self.update_handlers.append(handler) if handler else None
+
+    def remove_update_handler(self, handler: Callable[[Self, float], None]):
+        self.update_handlers.remove(handler) if handler else None
+
+    def add_activate_handler(self, handler: Callable[[Self], None]):
+        self.activate_handlers.append(handler) if handler else None
+
+    def remove_activate_handler(self, handler: Callable[[Self], None]):
+        self.activate_handlers.remove(handler) if handler else None
+
+    def add_deactivate_handler(self, handler: Callable[[Self], None]):
+        self.deactivate_handlers.append(handler) if handler else None
+
+    def remove_deactivate_handler(self, handler: Callable[[Self], None]):
+        self.deactivate_handlers.remove(handler) if handler else None
+
+    def add_destroyed_handler(self, handler: Callable[[Self], None]):
+        self.destroyed_handlers.append(handler) if handler else None
+
+    def remove_destroyed_handler(self, handler: Callable[[Self], None]):
+        self.destroyed_handlers.remove(handler) if handler else None
+
     def do_draw(self, surface: Any):
         self.draw(surface)
-        if self.draw_handler:
-            self.draw_handler(self, surface)
+        for handler in self.draw_handlers:
+            handler(self, surface)
 
         # Draw all active and visible children
         active_children = [
@@ -111,8 +162,8 @@ class GameObject:
 
     def do_update(self, dt: float):
         self.update(dt)
-        if self.update_handler:
-            self.update_handler(self, dt)
+        for handler in self.update_handlers:
+            handler(self, dt)
 
         # Update all active children
         active_children = [
@@ -134,9 +185,10 @@ class GameObject:
             if not child.destroy
         ]
 
+        # TODO: Fix destroy handler handling
         for destroyed_child in children_to_destroy:
             destroyed_child.destroyed()
-            if destroyed_child.destroyed_handler:
+            for handler in destroyed_child.destroyed_handlers:
                 destroyed_child.destroyed_handler(destroyed_child)
 
     def draw(self, surface: Any):
