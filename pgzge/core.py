@@ -10,7 +10,7 @@ class GameObject:
     A GameObject has the following properties:
         * name: The name of this object. Used when locating an object by name. Must not contain the `/`
                 or `.` characters.
-        * active: This has to be True for the the GameObject to be updated or drawn (visible and
+        * active: This has to be True for the GameObject to be updated or drawn (visible and
                   enabled also need to be True). The value of active is propagated to all children.
                   Changing active will also trigger the corresponding handlers.
         * destroy: If this is True, the object will be removed from its parent at the next update.
@@ -25,13 +25,13 @@ class GameObject:
                   multiple parents.
         * children: A list of child GameObjects. These will be updated and drawn only if this
                     GameObject is active.
-        * draw_handlers: Draw handlers are called during `process_draw()` if the GameObject is active and visible.
-        * update_handlers: Update handlers are called during `process_update()` if the GameObject is active and enabled.
+        * draw_handlers: Draw handlers are called during `draw_hierarchy()` if the GameObject is active and visible.
+        * update_handlers: Update handlers are called during `update_hierarchy()` if the GameObject is active and enabled.
         * activate_handlers = Activate handlers are called when active changes from False to True.
         * deactivate_handlers = Deactivate handlers are called when active changes from True to False.
         * destroy_handlers = Destroy handlers are called when `destroy()` is called on the GameObject.
 
-        The `process_update()` and `process_draw()` methods propagate down the hierarchy if active is
+        The `update_hierarchy()` and `draw_hierarchy()` methods propagate down the hierarchy if active is
         True and regardless of visible and active which only apply to this GameObject instance.
         i.e. a child can be enabled and visible even if the parent is not.
 
@@ -242,7 +242,7 @@ class GameObject:
         self.__children.remove(child)
         return self
 
-    def process_draw(self, surface: Any) -> Self:
+    def draw_hierarchy(self, surface: Any) -> Self:
         """
         Draws the GameObject (if `active` and `visible`) and propagates to children (if `active`).
         The surface is passed down through all objects but does not need to be a Pygame surface. It
@@ -257,7 +257,7 @@ class GameObject:
                 handler(self, surface)
 
         for child in self.__children:
-            child.process_draw(surface)
+            child.draw_hierarchy(surface)
 
         return self
 
@@ -268,7 +268,7 @@ class GameObject:
         """
         pass
 
-    def process_update(self, dt: float) -> Self:
+    def update_hierarchy(self, dt: float) -> Self:
         """
         Updates the GameObject (if `active` and `enabled`) and propagates to children (if `active`).
         Also removes any destroyed children.
@@ -296,7 +296,7 @@ class GameObject:
                 handler(self, dt)
 
         for child in self.__children:
-            child.process_update(dt)
+            child.update_hierarchy(dt)
 
         return self
 
@@ -384,7 +384,7 @@ def draw_game(surface: Any):
     for draw_func in __draw_funcs:
         draw_func(surface)
 
-    __root.process_draw(surface)
+    __root.draw_hierarchy(surface)
 
 
 __update_funcs: list[Callable[[float], None]] = []
@@ -398,7 +398,7 @@ def update_game(dt: float):
     for update_func in __update_funcs:
         update_func(dt)
 
-    __root.process_update(dt)
+    __root.update_hierarchy(dt)
 
 
 def add_game_object(game_object: GameObject):

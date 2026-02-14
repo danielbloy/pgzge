@@ -209,7 +209,7 @@ class GameHud(GameObject):
                         ((WIDTH - 5) - (16 * (i + 1)), LOWER_BORDER_START + 4))
 
     def update(self, dt):
-        self.show_stage_left = self.show_stage_left - dt
+        self.show_stage_left -= dt
         self.show_stage = self.show_stage_left > 0
 
         now = time.time()
