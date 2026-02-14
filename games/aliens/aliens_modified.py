@@ -1,3 +1,5 @@
+# This version of aliens has been modified to demonstrate additional techniques.
+# Original source material: https://codeclubadventures.co.uk/python/pygame/aliens/
 import os
 from typing import Any
 

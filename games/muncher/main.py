@@ -3,6 +3,7 @@ import os
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'700,100'
 
 import pgzrun
+from pgzge.core import draw_game, update_game
 from pgzero.clock import Clock
 from pgzero.keyboard import Keyboard
 from pgzero.screen import Screen
@@ -16,14 +17,11 @@ HEIGHT = 700
 
 
 def draw():
-    pass
-
-
-update_funcs = []
+    draw_game(screen.surface)
 
 
 def update(dt):
-    pass
+    update_game(dt)
 
 
 pgzrun.go()

@@ -25,20 +25,20 @@ class GameObject:
                   multiple parents.
         * children: A list of child GameObjects. These will be updated and drawn only if this
                     GameObject is active.
-        * draw_handlers: Draw handlers are called during `draw()` if the GameObject is active and visible.
-        * update_handlers: Update handlers are called during `update()` if the GameObject is active and enabled.
+        * draw_handlers: Draw handlers are called during `process_draw()` if the GameObject is active and visible.
+        * update_handlers: Update handlers are called during `process_update()` if the GameObject is active and enabled.
         * activate_handlers = Activate handlers are called when active changes from False to True.
         * deactivate_handlers = Deactivate handlers are called when active changes from True to False.
         * destroy_handlers = Destroy handlers are called when `destroy()` is called on the GameObject.
 
-        The `update()` and `draw()` methods propagate down the hierarchy if active is True and regardless of
-        visible and active which only apply to this GameObject instance. i.e. a child can be enabled and
-        visible even if the parent is not.
+        The `process_update()` and `process_draw()` methods propagate down the hierarchy if active is
+        True and regardless of visible and active which only apply to this GameObject instance.
+        i.e. a child can be enabled and visible even if the parent is not.
 
         Destroy, activate and deactivate are propagated to all children irrespective of whether active is
         True or False. All handlers are called before passing to the children except for destroy which
-        propagates to the children first. In the case of activate and deactivate, the `activate()` and
-        `deactivate()` methods are called before any handlers.
+        propagates to the children first. In the case of draw, update, activate and deactivate, the
+        `draw()`, `update()`, `activate()` and `deactivate()` methods are called before any handlers.
 
         The handlers can be used to provide instance specific behaviour without having to make a subclass
         and override the relevant method.
@@ -137,19 +137,19 @@ class GameObject:
         for child in self.__children:
             child.active = value
 
-    def activated(self) -> Self:
+    def activated(self) -> None:
         """
         This is called when the GameObject is activated. It provides an easy way for subclasses to provide
         activation code without using handlers.
         """
-        return self
+        pass
 
-    def deactivated(self) -> Self:
+    def deactivated(self) -> None:
         """
         This is called when the GameObject is deactivated. It provides an easy way for subclasses to provide
         deactivation code without using handlers.
         """
-        return self
+        pass
 
     def activate(self) -> Self:
         """
@@ -217,6 +217,9 @@ class GameObject:
             return self
 
         if child.__parent:
+            if child.__parent == self:
+                return self
+
             raise ValueError("child already has a parent")
 
         child.__parent = self
@@ -239,7 +242,7 @@ class GameObject:
         self.__children.remove(child)
         return self
 
-    def draw(self, surface: Any) -> Self:
+    def process_draw(self, surface: Any) -> Self:
         """
         Draws the GameObject (if `active` and `visible`) and propagates to children (if `active`).
         The surface is passed down through all objects but does not need to be a Pygame surface. It
@@ -249,15 +252,23 @@ class GameObject:
             return self
 
         if self.visible:
+            self.draw(surface)
             for handler in self.__draw_handlers:
                 handler(self, surface)
 
         for child in self.__children:
-            child.draw(surface)
+            child.process_draw(surface)
 
         return self
 
-    def update(self, dt: float) -> Self:
+    def draw(self, surface: Any) -> None:
+        """
+        This is called when the GameObject is drawn. It provides an easy way for subclasses to provide
+        draw code without using handlers and without having to remember to call the superclass.
+        """
+        pass
+
+    def process_update(self, dt: float) -> Self:
         """
         Updates the GameObject (if `active` and `enabled`) and propagates to children (if `active`).
         Also removes any destroyed children.
@@ -280,13 +291,21 @@ class GameObject:
             return self
 
         if self.enabled:
+            self.update(dt)
             for handler in self.__update_handlers:
                 handler(self, dt)
 
         for child in self.__children:
-            child.update(dt)
+            child.process_update(dt)
 
         return self
+
+    def update(self, dt: float) -> None:
+        """
+        This is called when the GameObject is updated. It provides an easy way for subclasses to provide
+        update code without using handlers and without having to remember to call the superclass.
+        """
+        pass
 
     def add_draw_handler(self, handler: Callable[[Self, Any], None]) -> Self:
         """Adds a `draw` handler."""
@@ -365,7 +384,7 @@ def draw_game(surface: Any):
     for draw_func in __draw_funcs:
         draw_func(surface)
 
-    __root.draw(surface)
+    __root.process_draw(surface)
 
 
 __update_funcs: list[Callable[[float], None]] = []
@@ -379,7 +398,7 @@ def update_game(dt: float):
     for update_func in __update_funcs:
         update_func(dt)
 
-    __root.update(dt)
+    __root.process_update(dt)
 
 
 def add_game_object(game_object: GameObject):
