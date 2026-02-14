@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Self, Any
+from typing import Self
 
 from pgzero.screen import Screen
 
@@ -52,12 +52,12 @@ class GameObject:
                  enabled: bool = True,
                  visible: bool = True,
                  children: list[Self] = None,
-                 draw_handler: Callable[[Self, Any], None] = None,
+                 draw_handler: Callable[[Self, Screen], None] = None,
                  update_handler: Callable[[Self, float], None] = None,
                  activate_handler: Callable[[Self], None] = None,
                  deactivate_handler: Callable[[Self], None] = None,
                  destroy_handler: Callable[[Self], None] = None,
-                 draw_handlers: list[Callable[[Self, Any], None]] = None,
+                 draw_handlers: list[Callable[[Self, Screen], None]] = None,
                  update_handlers: list[Callable[[Self, float], None]] = None,
                  activate_handlers: list[Callable[[Self], None]] = None,
                  deactivate_handlers: list[Callable[[Self], None]] = None,
@@ -74,7 +74,7 @@ class GameObject:
         self.enabled: bool = enabled
         self.__children: list[Self] = children.copy() if children else []
         self.__draw_handlers: list[
-            Callable[[Self, Any], None]] = draw_handlers.copy() if draw_handlers else []
+            Callable[[Self, Screen], None]] = draw_handlers.copy() if draw_handlers else []
         self.__update_handlers: list[
             Callable[[Self, float], None]] = update_handlers.copy() if update_handlers else []
         self.__activate_handlers: list[
@@ -288,12 +288,12 @@ class GameObject:
 
         return self
 
-    def add_draw_handler(self, handler: Callable[[Self, Any], None]) -> Self:
+    def add_draw_handler(self, handler: Callable[[Self, Screen], None]) -> Self:
         """Adds a `draw` handler."""
         self.__draw_handlers.append(handler) if handler else None
         return self
 
-    def remove_draw_handler(self, handler: Callable[[Self, Any], None]) -> Self:
+    def remove_draw_handler(self, handler: Callable[[Self, Screen], None]) -> Self:
         """Removes a `draw` handler."""
         self.__draw_handlers.remove(handler) if handler else None
         return self
@@ -349,10 +349,10 @@ def set_background_colour(colour: tuple[int, int, int]):
     __background_color = colour
 
 
-__draw_funcs: list[Callable[[Any], None]] = []
+__draw_funcs: list[Callable[[Screen], None]] = []
 
 
-def add_draw_func(func: Callable[[Any], None]):
+def add_draw_func(func: Callable[[Screen], None]):
     __draw_funcs.append(func)
 
 

@@ -41,58 +41,59 @@ STARS_TOTAL = 200
 from random import randint
 
 
-class StarField(GameObject):
+def starfield_activate(self):
+    self.n = STARS_TOTAL
+    self.stars = [
+        (
+            randint(0, WIDTH),  # x position
+            randint(0, HEIGHT),  # y position
+            randint(STARS_MIN_SPEED, STARS_MAX_SPEED)  # speed
+        )
+        for _ in range(STARS_TOTAL)
+    ]
 
-    def __init__(self, n):
-        super().__init__()
-        self.n = n
-        self.stars = [
+
+def starfield_draw(self, screen: Screen):
+    for star in self.stars:
+        screen.draw.filled_circle((star[0], star[1]), 1, WHITE)
+
+
+def starfield_update(self, dt: float):
+    # STEP A: Move stars down the screen
+    self.stars = [
+        (
+            star[0],  # x position
+            star[1] + (star[2] * dt),  # y position
+            star[2]  # speed
+        )
+        for star in self.stars
+    ]
+
+    # STEP B: Remove stars that have moved off the bottom of the screen
+    self.stars = [
+        (
+            star[0],
+            star[1],
+            star[2]
+        )
+        for star in self.stars
+        if star[1] < HEIGHT
+    ]
+
+    # STEP C: Add new stars at the top to maintain the total number of stars
+    for _ in range(self.n - len(self.stars)):
+        self.stars.append(
             (
                 randint(0, WIDTH),  # x position
-                randint(0, HEIGHT),  # y position
+                0,  # y position - top of screen
                 randint(STARS_MIN_SPEED, STARS_MAX_SPEED)  # speed
             )
-            for _ in range(n)
-        ]
-
-    def draw(self, screen):
-        for star in self.stars:
-            screen.draw.filled_circle((star[0], star[1]), 1, WHITE)
-
-    def update(self, dt):
-        # STEP A: Move stars down the screen
-        self.stars = [
-            (
-                star[0],  # x position
-                star[1] + (star[2] * dt),  # y position
-                star[2]  # speed
-            )
-            for star in self.stars
-        ]
-
-        # STEP B: Remove stars that have moved off the bottom of the screen
-        self.stars = [
-            (
-                star[0],
-                star[1],
-                star[2]
-            )
-            for star in self.stars
-            if star[1] < HEIGHT
-        ]
-
-        # STEP C: Add new stars at the top to maintain the total number of stars
-        for _ in range(self.n - len(self.stars)):
-            self.stars.append(
-                (
-                    randint(0, WIDTH),  # x position
-                    0,  # y position - top of screen
-                    randint(STARS_MIN_SPEED, STARS_MAX_SPEED)  # speed
-                )
-            )
+        )
 
 
-starfield = StarField(STARS_TOTAL)
+starfield = GameObject(activate_handler=starfield_activate,
+                       draw_handler=starfield_draw,
+                       update_handler=starfield_update)
 add_game_object(starfield)
 
 pgzrun.go()
