@@ -1,6 +1,8 @@
 from collections.abc import Callable
 from typing import Self, Any
 
+from pgzero.screen import Screen
+
 
 class GameObject:
     """
@@ -239,7 +241,7 @@ class GameObject:
         self.__children.remove(child)
         return self
 
-    def draw(self, surface: Any) -> Self:
+    def draw(self, screen: Screen) -> Self:
         """
         Draws the GameObject (if `active` and `visible`) and propagates to children (if `active`).
         """
@@ -248,10 +250,10 @@ class GameObject:
 
         if self.visible:
             for handler in self.__draw_handlers:
-                handler(self, surface)
+                handler(self, screen)
 
         for child in self.__children:
-            child.draw(surface)
+            child.draw(screen)
 
         return self
 
@@ -354,12 +356,12 @@ def add_draw_func(func: Callable[[Any], None]):
     __draw_funcs.append(func)
 
 
-def draw(surface):
-    surface.fill(__background_color)
+def draw_game(screen: Screen):
+    screen.fill(__background_color)
     for draw_func in __draw_funcs:
-        draw_func(surface)
+        draw_func(screen)
 
-    __root.draw(surface)
+    __root.draw(screen)
 
 
 __update_funcs: list[Callable[[float], None]] = []
@@ -369,8 +371,12 @@ def add_update_func(func: Callable[[float], None]):
     __update_funcs.append(func)
 
 
-def update(dt):
+def update_game(dt: float):
     for update_func in __update_funcs:
         update_func(dt)
 
     __root.update(dt)
+
+
+def add_game_object(game_object: GameObject):
+    __root.add_child(game_object)
