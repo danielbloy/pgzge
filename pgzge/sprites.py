@@ -22,6 +22,13 @@ class Behaviour:
 
 class Sprite(GameObject):
     # TODO: Add hitbox for collision detection
+    # TODO: Add position and x and y properties (in addition to pos
+    # TODO: Add velocity and x and y properties
+    # TODO: Add acceleration and ax, ay properties
+    # TODO: Add friction and fx and fy properties?
+    # TODO: Add size, width, height, topleft, topright etc. properties
+    # TODO: Add bounding box property
+    # TODO: Split sprite into those with images (muncher, aliens) and those that draw themselves (smash)
     def __init__(self, position, images, *behaviours):
         super().__init__()
         self.lifetime = None
