@@ -317,7 +317,7 @@ def load_image(image: str, requires_transparency: bool) -> tuple[Bitmap, Palette
     bitmap, palette = adafruit_imageload.load(f"/images/{image}", bitmap=Bitmap, palette=Palette)
     image_cache[image] = bitmap, palette
 
-    # PERFORMANCE: Transparency has a pretty harsh impact on fps so only use it when neccessary.
+    # PERFORMANCE: Transparency has a pretty harsh impact on fps so only use it when necessary.
     if requires_transparency:
         palette.make_transparent(0)
 
