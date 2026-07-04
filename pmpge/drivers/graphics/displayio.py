@@ -336,16 +336,18 @@ class DriverImageResource:
     tile_grid: TileGrid
     tile_grid_index: int  # Holds the index that the image was added to the object_group
     new_image_loaded: bool  # Set to True when load is called.
+    requires_transparency: bool  # Used to optimise the drawing of images
 
-    def __init__(self):
+    def __init__(self, hint_requires_transparency: bool):
         # Indicate that this is the first time the image has been added but using -1
         self.tile_grid_index = -1
+        self.requires_transparency = hint_requires_transparency
 
-    def load(self, image: str, hint_requires_transparency: bool) -> tuple[int, int]:
+    def load(self, image: str) -> tuple[int, int]:
         """
         Loads the named image resource, returning the width and height.
         """
-        bitmap, palette = load_image(image, hint_requires_transparency)
+        bitmap, palette = load_image(image, self.requires_transparency)
 
         # Create a TileGrid to hold the bitmap
         tile_grid = TileGrid(bitmap, pixel_shader=palette)

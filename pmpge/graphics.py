@@ -33,7 +33,7 @@ class ImageResource(DriverImageResource):
     notify: Callable[[], None] | None
 
     def __init__(self, name: str, notify: Callable[[], None] | None = None):
-        DriverImageResource.__init__(self)
+        DriverImageResource.__init__(self, False)  # TODO: Pass in hint here
         self.width = 0
         self.height = 0
         self.notify = notify
@@ -52,7 +52,7 @@ class ImageResource(DriverImageResource):
         Sets the name of the image resource and fires the notify event.
         """
         self._name = value
-        self.width, self.height = self.load(value, False)  # TODO: This is where the hint goes
+        self.width, self.height = self.load(value)
 
         if self.notify:
             self.notify()
