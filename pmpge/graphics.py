@@ -22,6 +22,11 @@ class ImageResource(DriverImageResource):
     Setting the name property will trigger a reload of the image and invoke the
     optional callback.
 
+    The `hint_requires_transparency` parameter in the constructor is passed to
+    the driver specific implementation to help it choose optimisations. Set this
+    to `False` if your image does not need transparency as it has a positive impact
+    on performance on microcontrollers. It makes no difference with Pygame Zero.
+
     NOTE: Instances of `DriverImageResource` are not intended to be sharable across
           `GameObject` instances as they may contain `GameObject` specific state
           required by the graphics driver. Therefore, instances of `ImageResource`
@@ -32,8 +37,10 @@ class ImageResource(DriverImageResource):
     _name: str
     notify: Callable[[], None] | None
 
-    def __init__(self, name: str, notify: Callable[[], None] | None = None):
-        DriverImageResource.__init__(self, True)  # TODO: Pass in hint here
+    def __init__(self, name: str,
+                 notify: Callable[[], None] | None = None,
+                 hint_requires_transparency: bool = True):
+        DriverImageResource.__init__(self, hint_requires_transparency)
         self.width = 0
         self.height = 0
         self.notify = notify

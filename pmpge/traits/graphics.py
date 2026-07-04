@@ -25,16 +25,22 @@ class DrawImage(GraphicsDrawImageTrait):
 
     image: ImageResource
 
-    def __init__(self, image: str, centered: bool = True):
+    def __init__(self, image: str, centered: bool = True,
+                 hint_requires_transparency: bool = True):
         """
         Creates the DrawImage trait using the given image resource name.
 
         When used with Sprites, the `centered` parameter should be `True`.
+
+        The `hint_requires_transparency` parameter in the constructor is passed to
+        the ImageResource to allow for driver specific optimisations. Set this to
+        `False` if your image does not need transparency as it has a positive impact
+        on performance on microcontrollers. It makes no difference with Pygame Zero.
         """
         GraphicsDrawImageTrait.__init__(self)
 
         # FUTURE: We could extract ImageResource to be passed in.
-        image = ImageResource(image)
+        image = ImageResource(image, hint_requires_transparency=hint_requires_transparency)
         image.centered = centered
 
         self.image = image

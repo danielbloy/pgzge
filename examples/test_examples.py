@@ -69,7 +69,7 @@ def execute_python_file(file_path):
         failures += 1
 
 
-def get_folders(folder, exclusion_list: list[str] = None):
+def get_folders(folder, exclusion_list: list[str] | None = None):
     """
     Locates all sub folders to process in folders. An exclusion list of folder names can
     be provided for folders to skip.
@@ -90,7 +90,7 @@ def get_folders(folder, exclusion_list: list[str] = None):
     return folders
 
 
-def get_files(folder, exclusion_list: list[str] = None):
+def get_files(folder, exclusion_list: list[str] | None = None):
     """
     Locates all files in a folder to process. An exclusion list of file names can
     be provided for files to skip.
