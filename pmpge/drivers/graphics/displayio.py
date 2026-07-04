@@ -309,6 +309,10 @@ def load_image(image: str, requires_transparency: bool) -> tuple[Bitmap, Palette
     """
     This will populate the image_cache with the specified image resource if it
     does not already exist in the cache. It will then return the cached image.
+
+    NOTE: Because we cache images to save RAM, the `requires_transparency` parameter on
+          the first time the image is loaded applies. If the image is later loaded but
+          has a different `requires_transparency` value, it is ignored.
     """
     if image in image_cache:
         image = image_cache[image]
