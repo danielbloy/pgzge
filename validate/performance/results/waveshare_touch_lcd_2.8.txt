@@ -24,75 +24,74 @@ No device driver
 Running on circuit with (320, 240) screen.
 Executing module <module 'validate.performance.baseline' from 'validate/performance/baseline.py'>
 No sound driver
-Peak: 99184 bytes, Used: 99184 bytes, Free: 8153232 bytes, Total: 8252416 bytes
-Peak: 122128 bytes, Used: 101248 bytes, Free: 8151168 bytes, Total: 8252416 bytes
-Peak: 123312 bytes, Used: 107936 bytes, Free: 8144480 bytes, Total: 8252416 bytes
-Peak: 123600 bytes, Used: 118240 bytes, Free: 8134176 bytes, Total: 8252416 bytes
-Peak: 123632 bytes, Used: 123360 bytes, Free: 8129056 bytes, Total: 8252416 bytes
-Peak: 123632 bytes, Used: 102352 bytes, Free: 8150064 bytes, Total: 8252416 bytes
-Peak: 123632 bytes, Used: 107392 bytes, Free: 8145024 bytes, Total: 8252416 bytes
-Peak: 123632 bytes, Used: 117632 bytes, Free: 8134784 bytes, Total: 8252416 bytes
-Peak: 123632 bytes, Used: 96736 bytes, Free: 8155680 bytes, Total: 8252416 bytes
-Peak: 123632 bytes, Used: 101712 bytes, Free: 8150704 bytes, Total: 8252416 bytes
+Peak: 100064 bytes, Used: 100064 bytes, Free: 8152352 bytes, Total: 8252416 bytes
+Peak: 123024 bytes, Used: 103712 bytes, Free: 8148704 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 111920 bytes, Free: 8140496 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 123584 bytes, Free: 8128832 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 100480 bytes, Free: 8151936 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 112144 bytes, Free: 8140272 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 118688 bytes, Free: 8133728 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 100672 bytes, Free: 8151744 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 112384 bytes, Free: 8140032 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 118880 bytes, Free: 8133536 bytes, Total: 8252416 bytes
 Achieved 59.20 updates/s
 Achieved 29.70 draws/s
-Peak: 123632 bytes, Used: 66736 bytes, Free: 8185680 bytes, Total: 8252416 bytes
+Peak: 125776 bytes, Used: 67232 bytes, Free: 8185184 bytes, Total: 8252416 bytes
 Executing module <module 'validate.performance.baseline_with_graphics' from 'validate/performance/baseline_with_graphics.py'>
-Peak: 116880 bytes, Used: 116880 bytes, Free: 8130416 bytes, Total: 8247296 bytes
-Peak: 148864 bytes, Used: 148864 bytes, Free: 8098432 bytes, Total: 8247296 bytes
-Peak: 186736 bytes, Used: 186736 bytes, Free: 8060560 bytes, Total: 8247296 bytes
-Peak: 226240 bytes, Used: 226240 bytes, Free: 8021056 bytes, Total: 8247296 bytes
-Peak: 251504 bytes, Used: 126128 bytes, Free: 8121168 bytes, Total: 8247296 bytes
-Peak: 251504 bytes, Used: 162144 bytes, Free: 8085152 bytes, Total: 8247296 bytes
-Peak: 251504 bytes, Used: 203280 bytes, Free: 8044016 bytes, Total: 8247296 bytes
-Peak: 251504 bytes, Used: 244576 bytes, Free: 8002720 bytes, Total: 8247296 bytes
-Peak: 251504 bytes, Used: 139760 bytes, Free: 8107536 bytes, Total: 8247296 bytes
-Peak: 251504 bytes, Used: 181248 bytes, Free: 8066048 bytes, Total: 8247296 bytes
-Achieved 58.00 updates/s
+Peak: 118288 bytes, Used: 118288 bytes, Free: 8129008 bytes, Total: 8247296 bytes
+Peak: 150272 bytes, Used: 150272 bytes, Free: 8097024 bytes, Total: 8247296 bytes
+Peak: 188144 bytes, Used: 188144 bytes, Free: 8059152 bytes, Total: 8247296 bytes
+Peak: 229280 bytes, Used: 229280 bytes, Free: 8018016 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 131296 bytes, Free: 8116000 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 167984 bytes, Free: 8079312 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 208864 bytes, Free: 8038432 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 246768 bytes, Free: 8000528 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 146464 bytes, Free: 8100832 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 187344 bytes, Free: 8059952 bytes, Total: 8247296 bytes
+Achieved 58.10 updates/s
 Achieved 29.70 draws/s
-Peak: 251504 bytes, Used: 69648 bytes, Free: 8177648 bytes, Total: 8247296 bytes
+Peak: 249264 bytes, Used: 70144 bytes, Free: 8177152 bytes, Total: 8247296 bytes
 Executing module <module 'validate.performance.baseline_with_graphics_small_display' from 'validate/performance/baseline_with_graphics_small_display.py'>
-Peak: 200848 bytes, Used: 200848 bytes, Free: 8046448 bytes, Total: 8247296 bytes
-Peak: 238176 bytes, Used: 238176 bytes, Free: 8009120 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 141376 bytes, Free: 8105920 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 182672 bytes, Free: 8064624 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 219776 bytes, Free: 8027520 bytes, Total: 8247296 bytes
-Peak: 249808 bytes, Used: 120976 bytes, Free: 8126320 bytes, Total: 8247296 bytes
-Peak: 249808 bytes, Used: 157120 bytes, Free: 8090176 bytes, Total: 8247296 bytes
-Peak: 249808 bytes, Used: 199536 bytes, Free: 8047760 bytes, Total: 8247296 bytes
-Peak: 249808 bytes, Used: 234496 bytes, Free: 8012800 bytes, Total: 8247296 bytes
-Peak: 249808 bytes, Used: 137056 bytes, Free: 8110240 bytes, Total: 8247296 bytes
-Achieved 57.40 updates/s
-Achieved 29.70 draws/s
-Peak: 249808 bytes, Used: 69648 bytes, Free: 8177648 bytes, Total: 8247296 bytes
+Peak: 202336 bytes, Used: 202336 bytes, Free: 8044960 bytes, Total: 8247296 bytes
+Peak: 240336 bytes, Used: 240336 bytes, Free: 8006960 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 145328 bytes, Free: 8101968 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 182336 bytes, Free: 8064960 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 220912 bytes, Free: 8026384 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 127088 bytes, Free: 8120208 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 168224 bytes, Free: 8079072 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 206544 bytes, Free: 8040752 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 246880 bytes, Free: 8000416 bytes, Total: 8247296 bytes
+Peak: 250816 bytes, Used: 148624 bytes, Free: 8098672 bytes, Total: 8247296 bytes
+Achieved 58.30 updates/s
+Achieved 29.80 draws/s
+Peak: 250816 bytes, Used: 70144 bytes, Free: 8177152 bytes, Total: 8247296 bytes
 Executing module <module 'validate.performance.memory' from 'validate/performance/memory.py'>
-Peak: 170016 bytes, Used: 170016 bytes, Free: 8077280 bytes, Total: 8247296 bytes
-Peak: 179632 bytes, Used: 179632 bytes, Free: 8067664 bytes, Total: 8247296 bytes
-Peak: 188864 bytes, Used: 188864 bytes, Free: 8058432 bytes, Total: 8247296 bytes
-Peak: 198992 bytes, Used: 198992 bytes, Free: 8048304 bytes, Total: 8247296 bytes
-Peak: 208672 bytes, Used: 208672 bytes, Free: 8038624 bytes, Total: 8247296 bytes
-Peak: 218352 bytes, Used: 218352 bytes, Free: 8028944 bytes, Total: 8247296 bytes
-Peak: 227168 bytes, Used: 227168 bytes, Free: 8020128 bytes, Total: 8247296 bytes
-Peak: 237744 bytes, Used: 237744 bytes, Free: 8009552 bytes, Total: 8247296 bytes
-Peak: 247424 bytes, Used: 247424 bytes, Free: 7999872 bytes, Total: 8247296 bytes
-Peak: 250352 bytes, Used: 152144 bytes, Free: 8095152 bytes, Total: 8247296 bytes
-Achieved 17.40 updates/s
-Achieved 17.40 draws/s
-Peak: 250352 bytes, Used: 69648 bytes, Free: 8177648 bytes, Total: 8247296 bytes
+Peak: 169312 bytes, Used: 169312 bytes, Free: 8077984 bytes, Total: 8247296 bytes
+Peak: 178480 bytes, Used: 178480 bytes, Free: 8068816 bytes, Total: 8247296 bytes
+Peak: 189024 bytes, Used: 189024 bytes, Free: 8058272 bytes, Total: 8247296 bytes
+Peak: 201392 bytes, Used: 201392 bytes, Free: 8045904 bytes, Total: 8247296 bytes
+Peak: 211040 bytes, Used: 211040 bytes, Free: 8036256 bytes, Total: 8247296 bytes
+Peak: 221168 bytes, Used: 221168 bytes, Free: 8026128 bytes, Total: 8247296 bytes
+Peak: 231264 bytes, Used: 231264 bytes, Free: 8016032 bytes, Total: 8247296 bytes
+Peak: 241872 bytes, Used: 241872 bytes, Free: 8005424 bytes, Total: 8247296 bytes
+Peak: 251136 bytes, Used: 251136 bytes, Free: 7996160 bytes, Total: 8247296 bytes
+Peak: 251136 bytes, Used: 155744 bytes, Free: 8091552 bytes, Total: 8247296 bytes
+Achieved 18.60 updates/s
+Achieved 18.60 draws/s
+Peak: 251136 bytes, Used: 70144 bytes, Free: 8177152 bytes, Total: 8247296 bytes
 Executing module <module 'validate.performance.huge_hierarchy' from 'validate/performance/huge_hierarchy.py'>
 Skipping creating huge hierarchy of GameObjects on microcontroller
-Peak: 83296 bytes, Used: 83296 bytes, Free: 8164000 bytes, Total: 8247296 bytes
-Peak: 105040 bytes, Used: 105040 bytes, Free: 8142256 bytes, Total: 8247296 bytes
-Peak: 130368 bytes, Used: 130368 bytes, Free: 8116928 bytes, Total: 8247296 bytes
-Peak: 157360 bytes, Used: 157360 bytes, Free: 8089936 bytes, Total: 8247296 bytes
-Peak: 181024 bytes, Used: 181024 bytes, Free: 8066272 bytes, Total: 8247296 bytes
-Peak: 208016 bytes, Used: 208016 bytes, Free: 8039280 bytes, Total: 8247296 bytes
-Peak: 231680 bytes, Used: 231680 bytes, Free: 8015616 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 88272 bytes, Free: 8159024 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 111904 bytes, Free: 8135392 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 138896 bytes, Free: 8108400 bytes, Total: 8247296 bytes
-Peak: 248656 bytes, Used: 165920 bytes, Free: 8081376 bytes, Total: 8247296 bytes
+Peak: 83792 bytes, Used: 83792 bytes, Free: 8163504 bytes, Total: 8247296 bytes
+Peak: 105536 bytes, Used: 105536 bytes, Free: 8141760 bytes, Total: 8247296 bytes
+Peak: 130864 bytes, Used: 130864 bytes, Free: 8116432 bytes, Total: 8247296 bytes
+Peak: 158272 bytes, Used: 158272 bytes, Free: 8089024 bytes, Total: 8247296 bytes
+Peak: 185296 bytes, Used: 185296 bytes, Free: 8062000 bytes, Total: 8247296 bytes
+Peak: 208928 bytes, Used: 208928 bytes, Free: 8038368 bytes, Total: 8247296 bytes
+Peak: 235952 bytes, Used: 235952 bytes, Free: 8011344 bytes, Total: 8247296 bytes
+Peak: 249984 bytes, Used: 90464 bytes, Free: 8156832 bytes, Total: 8247296 bytes
+Peak: 249984 bytes, Used: 118320 bytes, Free: 8128976 bytes, Total: 8247296 bytes
+Peak: 249984 bytes, Used: 142336 bytes, Free: 8104960 bytes, Total: 8247296 bytes
 Achieved 59.50 updates/s
 Achieved 29.90 draws/s
-Peak: 248656 bytes, Used: 69616 bytes, Free: 8177680 bytes, Total: 8247296 bytes
+Peak: 249984 bytes, Used: 70144 bytes, Free: 8177152 bytes, Total: 8247296 bytes
 >>>
