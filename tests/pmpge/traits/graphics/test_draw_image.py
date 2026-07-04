@@ -44,6 +44,31 @@ def test_constructor():
     assert trait.image.offset_y == 0
     assert trait.image.name == "8x8.png"
 
+    # Validate that we can pass in the transparency hint.
+    trait = DrawImage("7x7.png", hint_requires_transparency=True)
+    assert trait.image.surface is not None
+    assert trait.image.offset_x == 3
+    assert trait.image.offset_y == 3
+    assert trait.image.name == "7x7.png"
+
+    trait = DrawImage("8x8.png", hint_requires_transparency=False)
+    assert trait.image.surface is not None
+    assert trait.image.offset_x == 4
+    assert trait.image.offset_y == 4
+    assert trait.image.name == "8x8.png"
+
+    trait = DrawImage("7x7.png", centered=False, hint_requires_transparency=True)
+    assert trait.image.surface is not None
+    assert trait.image.offset_x == 0
+    assert trait.image.offset_y == 0
+    assert trait.image.name == "7x7.png"
+
+    trait = DrawImage("8x8.png", centered=False, hint_requires_transparency=False)
+    assert trait.image.surface is not None
+    assert trait.image.offset_x == 0
+    assert trait.image.offset_y == 0
+    assert trait.image.name == "8x8.png"
+
 
 # noinspection PyUnresolvedReferences
 def test_changing_image():

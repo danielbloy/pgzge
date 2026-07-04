@@ -305,10 +305,14 @@ def clear_image_cache():
 
 
 # This extraction has a massive positive impact on draw speed
-def load_image(image: str) -> tuple[Bitmap, Palette]:
+def load_image(image: str, requires_transparency: bool) -> tuple[Bitmap, Palette]:
     """
     This will populate the image_cache with the specified image resource if it
     does not already exist in the cache. It will then return the cached image.
+
+    NOTE: Because we cache images to save RAM, the `requires_transparency` parameter on
+          the first time the image is loaded applies. If the image is later loaded but
+          has a different `requires_transparency` value, it is ignored.
     """
     if image in image_cache:
         image = image_cache[image]
@@ -317,12 +321,9 @@ def load_image(image: str) -> tuple[Bitmap, Palette]:
     bitmap, palette = adafruit_imageload.load(f"/images/{image}", bitmap=Bitmap, palette=Palette)
     image_cache[image] = bitmap, palette
 
-    # PERFORMANCE: This has a pretty harsh impact on fps, dropping EdgeBadge from 40 to 29 fps
-    # TODO: Make Transparency support for an image optional. Specifically, background graphics and
-    #       tilemaps will have better performance without the support of transparency.
-    # TODO: Tilemaps should have their own background layer - we could potentially support more than
-    #       one background layer to allow for parallax.
-    palette.make_transparent(0)
+    # PERFORMANCE: Transparency has a pretty harsh impact on fps so only use it when necessary.
+    if requires_transparency:
+        palette.make_transparent(0)
 
     return bitmap, palette
 
@@ -339,16 +340,18 @@ class DriverImageResource:
     tile_grid: TileGrid
     tile_grid_index: int  # Holds the index that the image was added to the object_group
     new_image_loaded: bool  # Set to True when load is called.
+    requires_transparency: bool  # Used to optimise the drawing of images
 
-    def __init__(self):
+    def __init__(self, hint_requires_transparency: bool):
         # Indicate that this is the first time the image has been added but using -1
         self.tile_grid_index = -1
+        self.requires_transparency = hint_requires_transparency
 
     def load(self, image: str) -> tuple[int, int]:
         """
         Loads the named image resource, returning the width and height.
         """
-        bitmap, palette = load_image(image)
+        bitmap, palette = load_image(image, self.requires_transparency)
 
         # Create a TileGrid to hold the bitmap
         tile_grid = TileGrid(bitmap, pixel_shader=palette)

@@ -36,6 +36,17 @@ def test_create_image_resource():
     assert image.width == 8
     assert image.height == 8
 
+    # Now validate we can specify the transparency hint
+    image = ImageResource("earth", hint_requires_transparency=True)
+    assert image._name == "earth"
+    assert image.width == 16
+    assert image.height == 16
+
+    image = ImageResource("moon", hint_requires_transparency=False)
+    assert image._name == "moon"
+    assert image.width == 8
+    assert image.height == 8
+
 
 def test_changing_image_work():
     """
