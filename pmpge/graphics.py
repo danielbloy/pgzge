@@ -52,7 +52,7 @@ class ImageResource(DriverImageResource):
         Sets the name of the image resource and fires the notify event.
         """
         self._name = value
-        self.width, self.height = self.load(value)
+        self.width, self.height = self.load(value, False)  # TODO: This is where the hint goes
 
         if self.notify:
             self.notify()

@@ -305,7 +305,7 @@ def clear_image_cache():
 
 
 # This extraction has a massive positive impact on draw speed
-def load_image(image: str) -> tuple[Bitmap, Palette]:
+def load_image(image: str, requires_transparency: bool) -> tuple[Bitmap, Palette]:
     """
     This will populate the image_cache with the specified image resource if it
     does not already exist in the cache. It will then return the cached image.
@@ -317,12 +317,9 @@ def load_image(image: str) -> tuple[Bitmap, Palette]:
     bitmap, palette = adafruit_imageload.load(f"/images/{image}", bitmap=Bitmap, palette=Palette)
     image_cache[image] = bitmap, palette
 
-    # PERFORMANCE: This has a pretty harsh impact on fps, dropping EdgeBadge from 40 to 29 fps
-    # TODO: Make Transparency support for an image optional. Specifically, background graphics and
-    #       tilemaps will have better performance without the support of transparency.
-    # TODO: Tilemaps should have their own background layer - we could potentially support more than
-    #       one background layer to allow for parallax.
-    palette.make_transparent(0)
+    # PERFORMANCE: Transparency has a pretty harsh impact on fps so only use it when neccessary.
+    if requires_transparency:
+        palette.make_transparent(0)
 
     return bitmap, palette
 
@@ -344,11 +341,11 @@ class DriverImageResource:
         # Indicate that this is the first time the image has been added but using -1
         self.tile_grid_index = -1
 
-    def load(self, image: str) -> tuple[int, int]:
+    def load(self, image: str, hint_requires_transparency: bool) -> tuple[int, int]:
         """
         Loads the named image resource, returning the width and height.
         """
-        bitmap, palette = load_image(image)
+        bitmap, palette = load_image(image, hint_requires_transparency)
 
         # Create a TileGrid to hold the bitmap
         tile_grid = TileGrid(bitmap, pixel_shader=palette)

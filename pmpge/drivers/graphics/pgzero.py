@@ -91,7 +91,7 @@ class DriverImageResource:
     """
     surface: Surface
 
-    def load(self, image: str) -> tuple[int, int]:
+    def load(self, image: str, hint_requires_transparency: bool) -> tuple[int, int]:
         """
         Loads the named image resource, returning the width and height.
         """
