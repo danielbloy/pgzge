@@ -20,6 +20,9 @@ class DriverImageResource:
     Mandatory class, does nothing.
     """
 
+    def __init__(self, hint_requires_transparency: bool):
+        pass
+    
     # noinspection PyMethodMayBeStatic
     def load(self, _: str) -> tuple[int, int]:
         return 0, 0
