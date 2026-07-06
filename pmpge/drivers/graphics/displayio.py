@@ -18,7 +18,7 @@
 # are all added to the object Group instance. Because we add them in the order
 # that we traverse the hierarchy, the implicit draw order is preserved - even
 # with the deactivated objects. We also only generate the TileGrid instances
-# we need. See the note below about why we don't minic the hierarchy structure.
+# we need. See the note below about why we don't mimic the hierarchy structure.
 #
 # However, if the hierarchy later changes, we do not rebuild the order of the
 # TileGrid instances. New GameObjects will get added to the end of the list in
@@ -31,7 +31,7 @@
 #    add the entire new branch to the Game.root instance).
 #  * If you need to rework the hierarchy, call Graphics.game_object_hierarchy_changed()
 #    which will force a rebuild of the entire hierarchy. This is expensive so
-#    use it sparingly and at points that can accomodate the performance hit.
+#    use it sparingly and at points that can accommodate the performance hit.
 #
 # Destroyed objects always get removed correctly. Deactivated objects get correctly
 # hidden.
