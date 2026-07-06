@@ -113,6 +113,11 @@ Therefore, if your sprites have transparent bits where you would not expect them
 transparent when executing in a CircuitPython environment, check the colour palette
 you have used.
 
+## Roadmap and Changelog
+
+For information on current development priorities, see [roadmap](./roadmap.md). For
+details of releases, see [changelog](./changelog.md).
+
 ## Alternative projects
 
 This project has specific goals of making it easier to write games in Python
