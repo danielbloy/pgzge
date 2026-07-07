@@ -1,4 +1,4 @@
-# CircuitPython optimization checklist
+# CircuitPython optimisation checklist
 
 Concrete rules to check for, grounded in this codebase. Treat
 `validate/performance/README.md`'s "Optimisation roadmap" as the canonical,
@@ -41,12 +41,12 @@ wins; update this file or flag the conflict to the user.
   `draw_hierarchy`, and `traverse_hierarchy` are already implemented
   iteratively with a level-by-level swap (`current, children = children,
   current`) specifically to avoid recursion overhead — this is already
-  optimized. Don't "simplify" it back to recursive calls; that would be a
+  optimised. Don't "simplify" it back to recursive calls; that would be a
   regression, not a cleanup.
 - **Reflection in the hot path vs. cold path.** `apply_trait()` uses `dir()` +
   `getattr`/`setattr` reflection, which is slow — but it only runs once per
   trait application at GameObject construction time, not per-frame. Don't
-  spend effort optimizing it unless profiling shows construction-time cost
+  spend effort optimising it unless profiling shows construction-time cost
   actually matters (e.g. a game that recreates many GameObjects per second,
   which the target performance envelope — 20-50 GameObjects total — suggests
   is not the common case).
