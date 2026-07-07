@@ -22,3 +22,24 @@
 * Add multi-microcontroller support with one controller driving the screen and the second microcontroller
   driving the game, connected via SPI
 * Explore supporting MicroPython
+
+### Functionality gaps against MakeCode Arcade
+
+The following are known functionality gaps between this framework and MakeCode Arcade
+that will be closed as development of the multi-platform games continues.
+
+* Lives - Info Trait
+* Scores - Info Trait
+* Countdown - Info Trait
+* Game over - Game Trait
+* On Game Update every 500ms - Game Trait
+* On Game Update - Game Trait
+* Reset game - Game Trait
+* Time since start (ms) - Game Trait
+* Embedded image assets
+* Palette
+* Backgrounds
+* Animations
+* Scrolling/tilemaps
+* Collision detection
+* Particles
