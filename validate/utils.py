@@ -95,7 +95,7 @@ def execute(
     @param setup_func - Called to setup the Game instance
     @param runtime - The number of seconds to execute for
     @param sample_frequency - The number of memory samples per second.
-    @param report_frequency - The number of time to report memory usage per second.
+    @param report_frequency - The number of times to report memory usage per second.
     """
     sample_period = 1_000_000_000 // max(sample_frequency, 1)
     last_sample = 0

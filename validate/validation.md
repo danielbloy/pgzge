@@ -4,8 +4,7 @@ The validation scripts are designed to be run on a CircuitPython device to
 validate both the performance of PMPGE but also validate the correct behaviour
 of the drivers as these are impossible to test on a PC with automated testing.
 Some of the validation tests require a human to check the results so have some
-interactivity. There is also a `validate_all.py` script which runs all the
-non-interactive tests.
+interactivity. There is also a `validate_all.py` script which runs all tests.
 
 The following steps are required to be followed to run the validation
 on a CircuitPython device.
