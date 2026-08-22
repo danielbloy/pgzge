@@ -57,8 +57,9 @@ that's fast but unreadable works against the project's actual goals. Concretely:
 
 ## Process
 
-1. **Scope**: default to all of `pmpge/` excluding `pmpge/drivers/*/pgzero.py`
-   (desktop-only, never runs on-device — deprioritize). If the user names a
+1. **Scope**: always default to all of `pmpge/`, including `pmpge/drivers/*/pgzero.py`
+   (desktop-only Pygame Zero drivers) — this skill's scope is the whole
+   directory, nothing under it is excluded by default. If the user names a
    file/folder, scope to that instead.
 2. **Classify before judging.** For each candidate change, classify the code as:
     - **Hot path**: anything reachable from `update_hierarchy()` /

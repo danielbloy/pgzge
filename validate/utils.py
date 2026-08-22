@@ -4,8 +4,8 @@ the on device validation and profiling. The only function you should need to use
 is execute() as it bootstraps everything else.
 """
 import gc
-import time
 import traceback
+from time import monotonic, monotonic_ns
 
 from pmpge.environment import is_running_on_desktop, config
 from pmpge.game import Game
@@ -108,7 +108,7 @@ def execute(
         Samples and reports the memory usage at the required frequencies.
         """
         nonlocal last_sample, last_report
-        now = time.monotonic_ns()
+        now = monotonic_ns()
 
         sample = (now - last_sample) >= sample_period
         report = (now - last_report) >= reporting_period
@@ -127,7 +127,7 @@ def execute(
         nonlocal update_cycles
         update_cycles += 1
 
-        if time.monotonic() > finish:
+        if monotonic() > finish:
             game.terminate()
 
     draw_cycles = 0
@@ -145,7 +145,7 @@ def execute(
 
     __reset_memory_usage()
     __start_profiling()
-    finish = time.monotonic() + runtime + 0.05  # ake sure we get the start AND finish reports.
+    finish = monotonic() + runtime + 0.05  # Make sure we get the start AND finish reports.
     game.run()
     __end_profiling()
 

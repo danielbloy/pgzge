@@ -1,4 +1,4 @@
-import math
+from math import cos, sin
 
 
 class Velocity:
@@ -141,8 +141,8 @@ class AngularMotion:
         self.angle = angle
 
         radius = self.radius
-        self.x = self.cx + (radius * math.cos(angle))
-        self.y = self.cy + (radius * math.sin(angle))
+        self.x = self.cx + (radius * cos(angle))
+        self.y = self.cy + (radius * sin(angle))
 
 
 class HorizontalBounce:
