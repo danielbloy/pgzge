@@ -145,7 +145,7 @@ def execute(
 
     __reset_memory_usage()
     __start_profiling()
-    finish = monotonic() + runtime + 0.05  # ake sure we get the start AND finish reports.
+    finish = monotonic() + runtime + 0.05  # Make sure we get the start AND finish reports.
     game.run()
     __end_profiling()
 
