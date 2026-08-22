@@ -85,6 +85,7 @@ class GameObject:
     enabled: bool
     _children: list[Self]
     _alive: bool
+    _has_dead_child: bool
 
     _draw_handlers: list[Callable[[Self, Any], None]]
     _update_handlers: list[Callable[[Self, float], None]]
@@ -122,6 +123,7 @@ class GameObject:
         self.enabled = enabled
         self._children = []
         self._alive = True
+        self._has_dead_child = False
 
         # Copy across the handler lists first; this creates empty lists if there are no
         # handler lists specified.
@@ -299,6 +301,13 @@ class GameObject:
         GameObject.something_destroyed = True
         self.deactivate()
         self._alive = False
+
+        # Flags the parent to prune its _children list on the next update_hierarchy()
+        # pass, instead of every GameObject in the tree rebuilding its _children list
+        # whenever anything died anywhere.
+        parent = self._parent
+        if parent is not None:
+            parent._has_dead_child = True
 
         self.destroyed()
         for handler in self._destroy_handlers:
@@ -550,19 +559,25 @@ def update_hierarchy(root: GameObject, dt: float):
     Updates the GameObject (if `active` and `enabled`) and propagates to children (if `active`).
     Also removes any destroyed children. This doesn't use traverse_hierarchy() as it is slower.
     """
-    something_destroyed = GameObject.something_destroyed
     current = [root]
     children = []
     while current:
         for go in current:
 
-            # Remove any destroyed children (only when something was actually destroyed).
-            if something_destroyed:
-                for child in [child for child in go._children if not child._alive]:
-                    child._parent = None
+            # Only this GameObject's own dead children trigger a rebuild — avoids
+            # reallocating _children for every parent in the tree whenever anything
+            # died anywhere (see destroy()'s _has_dead_child flag).
+            if go._has_dead_child:
+                alive_children = []
+                for child in go._children:
+                    if child._alive:
+                        alive_children.append(child)
+                    else:
+                        child._parent = None
 
                 # noinspection PyTypeChecker
-                go._children = [child for child in go._children if child._alive]
+                go._children = alive_children
+                go._has_dead_child = False
 
             if not go._active:
                 continue
