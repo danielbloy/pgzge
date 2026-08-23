@@ -48,6 +48,26 @@
 # order won't be correct. therefore, the lower memory cost and faster performance
 # option was taken.
 #
+# LIMITATION: TRANSPARENCY
+#
+# Transparency is implemented with a colour key rather than an alpha channel.
+# When an image is loaded with adafruit_imageload:
+#
+#  * Truecolor PNG files (including RGBA) are loaded into an RGB565 bitmap with
+#    a ColorConverter pixel shader and the alpha channel is discarded. When
+#    transparency is requested, the colour black (0x000000) is made transparent,
+#    so any genuinely black pixels in the artwork become transparent too.
+#  * Indexed images without their own transparency information have palette
+#    index 0 made transparent, whatever colour that happens to be.
+#  * Indexed PNG files with a tRNS chunk supply their own transparency, which
+#    adafruit_imageload applies to the Palette. These images are left untouched
+#    and display correctly, including any opaque black pixels.
+#
+# Therefore, to display sprites that contain black pixels, convert them to
+# indexed PNG files with a tRNS chunk using tools/convert_images.py. See the
+# 'Note about images' section in the top level README.md for the details and
+# other workarounds.
+#
 # REFERENCES
 #
 # * https://docs.circuitpython.org/en/latest/shared-bindings/displayio/
@@ -322,10 +342,30 @@ def load_image(image: str, requires_transparency: bool) -> tuple[Bitmap, Palette
     image_cache[image] = bitmap, palette
 
     # PERFORMANCE: Transparency has a pretty harsh impact on fps so only use it when necessary.
-    if requires_transparency:
+    if requires_transparency and not has_own_transparency(palette):
+        # The image did not supply its own transparency, so fall back to the colour key:
+        # palette index 0 for indexed images or, for truecolor images (where adafruit_imageload
+        # returns a ColorConverter), the colour black. See LIMITATION: TRANSPARENCY above.
         palette.make_transparent(0)
 
     return bitmap, palette
+
+
+def has_own_transparency(palette) -> bool:
+    """
+    Returns True when the image supplied its own transparency information (e.g. an
+    indexed PNG with a tRNS chunk), which adafruit_imageload has already applied to
+    the Palette. Truecolor images are loaded with a ColorConverter rather than a
+    Palette and can never carry their own transparency.
+    """
+    if not isinstance(palette, Palette):
+        return False
+
+    for index in range(len(palette)):
+        if palette.is_transparent(index):
+            return True
+
+    return False
 
 
 class DriverImageResource:
