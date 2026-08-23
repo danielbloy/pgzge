@@ -30,7 +30,7 @@ player = Sprite(
     100, 60,
     Velocity(0, 0),
     Acceleration(0, 120),
-    DrawImage("player.png"),
+    DrawImage("john.png"),
     MoveWithController(controller, 60, 0),
     BoundPosition(8, 8, game.width - 8, game.height - 8))
 
