@@ -133,6 +133,9 @@ have the following options:
    `DrawImage(..., hint_requires_transparency=False)`, which disables the colour key entirely (and
    is faster on a microcontroller).
 
+_NOTE: The `convert_images.py` tool was written using Claude code to prove the concept and should
+not be considered production grade._
+
 ## Roadmap and Changelog
 
 For information on current development priorities, see [roadmap](./roadmap.md). For details of
