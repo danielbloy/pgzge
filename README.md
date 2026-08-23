@@ -99,15 +99,39 @@ For more information on how to implement a driver, see the documentation in
 
 ### Note about images
 
-When executing in a CircuitPython environment, transparency can get confusing when loading PNG files
-as the function used to load images (`adafruit_imageload.load()`)
-does not directly load an alpha channel into the bitmaps. Instead, it loads the image data into a
-`Bitmap` and colour indices into a `Palette`. We then pick a specific colour from the Palette to be
-transparent; we always pick the first colour and this is often black. If your PNG file has an alpha
-channel, `adafruit_imageload.load()`
-typically assigns those pixels to the first colour in the palette; this is often Black. Therefore,
-if your sprites have transparent bits where you would not expect them to be transparent when
-executing in a CircuitPython environment, check the colour palette you have used.
+Note that the displayio driver implements transparency with a colour key unless the image supplies
+its own transparency information (an indexed PNG with a `tRNS` chunk). This means images containing
+pure black pixels may display those pixels as transparent unless they are converted with
+`tools/convert_images.py`. This is explained further below.
+
+When executing in a CircuitPython environment, images are loaded with `adafruit_imageload.load()`
+which does not support an alpha channel. Transparency is instead implemented with a colour key:
+
+* Truecolor PNG files (the most common kind, including those with an alpha channel) are loaded with
+  the alpha channel discarded and the colour black used as the colour key. Transparent pixels are
+  typically stored as black in the file so transparency appears to work, but any genuinely black
+  pixels in your artwork also become transparent.
+* Indexed PNG files without transparency information have palette index 0 used as the colour key,
+  whatever colour that happens to be.
+* Indexed PNG files with transparency information (a `tRNS` chunk) display correctly: the
+  transparent pixels have their own palette entry, separate from every opaque colour - including
+  opaque black.
+
+If your sprites are transparent where you do not expect (typically where the artwork is black), you
+have the following options:
+
+1. Convert the image to an indexed PNG with a `tRNS` chunk. The script
+   [`tools/convert_images.py`](./tools/convert_images.py) does this using only the Python standard
+   library, e.g. `python tools/convert_images.py my_game/images`. This is the recommended option: it
+   fixes the problem completely, requires no changes to your game code (the graphics driver
+   automatically detects that the image supplies its own transparency), Pygame Zero loads the
+   converted files natively so the image displays identically on desktop, and indexed images also
+   load faster and use less RAM on a microcontroller.
+2. Avoid pure black `(0, 0, 0)` in your artwork - a near-black such as `(8, 8, 8)` looks identical
+   on a small display and survives the colour key.
+3. If the image does not need transparency at all, create it with
+   `DrawImage(..., hint_requires_transparency=False)`, which disables the colour key entirely (and
+   is faster on a microcontroller).
 
 ## Roadmap and Changelog
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+Fixed sprites that contain black pixels displaying those pixels as transparent with the
+displayio graphics driver. Images that supply their own transparency information (indexed
+PNG files with a `tRNS` chunk) now keep it instead of having the black/index 0 colour key
+applied. Added `tools/convert_images.py` to convert RGBA PNG files into that format and
+documented the behaviour in the 'Note about images' section of `README.md`. Images that
+do not supply their own transparency information behave exactly as before.
+
 ## 0.1.0 - Alpha
 
 Version 0.1.0 provides the basic functionality of the game engine, including support for a
