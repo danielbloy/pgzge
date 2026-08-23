@@ -36,6 +36,11 @@ class DrawImage(GraphicsDrawImageTrait):
         the ImageResource to allow for driver specific optimisations. Set this to
         `False` if your image does not need transparency as it has a positive impact
         on performance on microcontrollers. It makes no difference with Pygame Zero.
+
+        NOTE: On microcontrollers transparency is implemented with a colour key, so
+        images containing pure black pixels may display those pixels as transparent
+        unless the image is converted with `tools/convert_images.py`. See the
+        'Note about images' section in the top level README.md.
         """
         GraphicsDrawImageTrait.__init__(self)
 
