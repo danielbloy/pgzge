@@ -1,4 +1,6 @@
 """
+TODO: Replace ABXY with NSEW and provide mappings for ABXY which is device specific.
+
 The controller configuration is based on 12 button SNES controller as follows:
 
  L Shoulder   R Shoulder
